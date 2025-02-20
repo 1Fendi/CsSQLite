@@ -1,0 +1,4 @@
+c:\Users\mutaw\Google Drive\Projects\C#\CsSQLite\obj\Debug\net9.0\CsSQLite.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\mutaw\Google Drive\Projects\C#\CsSQLite\obj\Debug\net9.0\CsSQLite.AssemblyInfoInputs.cache
+c:\Users\mutaw\Google Drive\Projects\C#\CsSQLite\obj\Debug\net9.0\CsSQLite.AssemblyInfo.cs
+c:\Users\mutaw\Google Drive\Projects\C#\CsSQLite\obj\Debug\net9.0\CsSQLite.csproj.CoreCompileInputs.cache
