@@ -7,73 +7,84 @@ namespace CsSQLite.Models
 {
 	public class DataBase
 	{
-		public IDbConnection connection;
-		public string FileName;
-		public bool ActiveConnect;
-		public DataBase(string Con)
+		public IDbConnection dbConnection;
+		public string DatabaseFilePath;
+		public bool ActiveConnector;
+		public DataBase(string ConnectionString)
 		{
-			FileName = Con;
-			connection = Connect(Con);
-			connection.Open();
+			DatabaseFilePath = ConnectionString;
+			dbConnection = Connect(ConnectionString);
+			dbConnection.Open();
 		}
 
-		public IDbConnection Connect(string Con)
+		public IDbConnection Connect(string ConnectionString)
 		{	
-			ActiveConnect = true;
-			return new SQLiteConnection($"Data Source={Con}; Version=3 ; Foreign Keys=true");
+			ActiveConnector = true;
+			return new SQLiteConnection($"Data Source={ConnectionString}; Version=3 ; Foreign Keys=true");
 		}
 
 		public void DisConnect(bool ActiveMessage = false)
 		{
-			if (connection.State == ConnectionState.Open)
+			if (dbConnection.State == ConnectionState.Open)
 			{
-				ActiveConnect = false;
-				connection.Close();
-	            if (ActiveMessage)Console.WriteLine($"Disconnection with {FileName} successful");
+				ActiveConnector = false;
+				dbConnection.Close();
+	            if (ActiveMessage)Console.WriteLine($"Disconnection with {DatabaseFilePath} successful");
 				return;
 			}
 			if (ActiveMessage) Console.WriteLine("No active connection to close.");
 
 		}
 
-		public void CreateTable(string TableName, Dictionary<string, string> Columns)
+		// public void PrintToConsole(List<DataBase> database)
+        // {
+        //     foreach (DataBase column in database)
+        //     {
+        //         Console.WriteLine($"ID: {student.Id}\t\tName: {student.Name}\t\tGrade: {student.Grade:0.00}");
+        //     }
+        // }
+		public void CreateTable(string TableName, Dictionary<string, string> TableColumns)
 		{
 			try
 			{
-	            List<string> FormattedColumns = new();
-	            bool PrimarySet = false;  // To track if PRIMARY KEY has been set
+	            List<string> ColumnFormats = new();
+				List<string> dataColumnName = TableColumns.Keys.AsList();
+				List<string> dataColumnType = TableColumns.Values.AsList();//[int (P),text...(P,AI)]
+				string ColumnString = string.Empty;
 
-	            foreach(var item in Columns)  //"id INTEGER" : " (NN) (P,AI)"
+				if (dataColumnType.Any(value => value.Contains("3")))
 				{
-					string field = item.Key;
-					string dataType = item.Value;
-
-	                List<string> parts = dataType.Split(' ').ToList<string>(); //["(NN)", "(P,AI)"]
-	               
-	                // Check if column is NOT NULL
-	                if (parts.Contains("(NN)")) field += " NOT NULL";//"id integer not null"
-	                if (parts.Contains("(U)")) field += " UNIQUE";
-	
-	                // Check if column is PRIMARY KEY AUTOINCREMENT
-	                if (parts.Contains("(P,AI)"))
+					for(int item = 0; item < dataColumnType.Count; item++)
 					{
-	                    if (PrimarySet) field = field.Replace("PRIMARY KEY", "");
-	
-	                    field += " PRIMARY KEY AUTOINCREMENT";//id integer not null PRIMARY KEY AUTOINCREMENT
-	                    PrimarySet = true;
+						dataColumnType[item] = dataColumnType[item].Replace("2", "");
 					}
-	                // Check if column is PRIMARY KEY
-	                else if (parts.Contains("(P)") && !PrimarySet)
-	                {    
-						field += " PRIMARY KEY";
-	                    PrimarySet = true;
-					}   
-					
-				    FormattedColumns.Add(field);
-				}     
+				}
 
-				string Code = $"CREATE TABLE \"{TableName}\" ({string.Join(", ", FormattedColumns)});";
-				connection.Execute(Code);
+				for (int item = 0; item < dataColumnName.Count; item++)
+				{
+	                List<string> dataColumnParts = dataColumnType[item].Split(' ').ToList<string>(); //["(NN)", "(P,AI)"]
+	               	// For type				
+					if (dataColumnParts.Contains("1")) ColumnString = " INTEGER";
+					if (dataColumnParts.Contains("2")) ColumnString = " TEXT";
+					if (dataColumnParts.Contains("3")) ColumnString = " REAL";
+					if (dataColumnParts.Contains("4")) ColumnString = " BLOB";
+					if (dataColumnParts.Contains("5")) ColumnString = " NUMERIC";
+					Console.WriteLine(ColumnString);
+					//For dataType
+	                if (dataColumnParts.Contains("1")) ColumnString += " NOT NULL";//"id integer not null"
+	                if (dataColumnParts.Contains("2")) ColumnString += " PRIMARY KEY";
+	                if (dataColumnParts.Contains("3")) ColumnString += " PRIMARY KEY AUTOINCREMENT";//id integer not null PRIMARY KEY AUTOINCREMENT
+	                if (dataColumnParts.Contains("4")) ColumnString += " UNIQUE";
+					Console.WriteLine(ColumnString);
+
+				    ColumnFormats.Add(ColumnString);
+					ColumnString = string.Empty;
+				}     
+				
+				string Code = $"CREATE TABLE IF NOT EXISTS \"{TableName}\" ({columnname}{string.Join(", ", ColumnFormats)});";
+				Console.WriteLine($"tableC: {Code}");
+
+				dbConnection.Execute(Code);
 			}
 
 			catch (SQLiteException e)

@@ -8,11 +8,6 @@ namespace CsSQLite.Models
 {
     public class Columns
     {
-        /*
-        {"id":int...,
-         "somje": text...,
-         "dfd":real...,}
-        */
         public Dictionary<string, string> DbColumns = new();
         public List<string> FieldNames = new();
         public List<string> FieldTypes = new();
@@ -30,6 +25,5 @@ namespace CsSQLite.Models
                 DbColumns[$"{FieldNames[item]} {FieldTypes[item]}"] = FieldTypes[item];
             }
         }
-
     }
 }
