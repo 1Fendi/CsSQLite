@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Yousef AL Mutawa\\Google Drive\\CsSQLite\\CsSQLite.csproj": {}
+    "c:\\Users\\Yousef AL Mutawa\\Google Drive\\My Projects\\CsSQLite\\CsSQLite.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Yousef AL Mutawa\\Google Drive\\CsSQLite\\CsSQLite.csproj": {
+    "c:\\Users\\Yousef AL Mutawa\\Google Drive\\My Projects\\CsSQLite\\CsSQLite.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Yousef AL Mutawa\\Google Drive\\CsSQLite\\CsSQLite.csproj",
+        "projectUniqueName": "c:\\Users\\Yousef AL Mutawa\\Google Drive\\My Projects\\CsSQLite\\CsSQLite.csproj",
         "projectName": "CsSQLite",
-        "projectPath": "c:\\Users\\Yousef AL Mutawa\\Google Drive\\CsSQLite\\CsSQLite.csproj",
+        "projectPath": "c:\\Users\\Yousef AL Mutawa\\Google Drive\\My Projects\\CsSQLite\\CsSQLite.csproj",
         "packagesPath": "C:\\Users\\Yousef AL Mutawa\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Yousef AL Mutawa\\Google Drive\\CsSQLite\\obj\\",
+        "outputPath": "c:\\Users\\Yousef AL Mutawa\\Google Drive\\My Projects\\CsSQLite\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

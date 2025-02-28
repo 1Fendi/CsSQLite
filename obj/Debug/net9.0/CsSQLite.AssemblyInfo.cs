@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CsSQLite")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f96d643d20574403e838ebe34d859d23054b6cfd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+15aeec3ffb00068bb0b276f2c7fdbde35fc192ea")]
 [assembly: System.Reflection.AssemblyProductAttribute("CsSQLite")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CsSQLite")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -11,6 +11,7 @@ namespace CsSQLite
     {
         static string? input;
         static DataBase? file;
+        static ColumnsInfo? DataBaseColumns;
         static string path = string.Empty;
         static object Input = new object();
         static void Main(string[] args)
@@ -62,17 +63,22 @@ namespace CsSQLite
             bool SitConnection = true;
             while (SitConnection)
             {
-                ConnectionMenu();
+                input = "1";
 
+                if (file != null && file.ActiveConnector)
+                {
+                    ConnectionMenu();
+                }
+                
                 switch (input)
                 {
                     case "1":
                         // Connect to an existing database or create a new one
+
                         path = (string) Input.Input("Enter file name/path: ");
                         file = new DataBase(path);
                         Console.WriteLine($"Connect with {file.DatabaseFilePath} has been succeed");
 
-                        new object().Input("Press to return");
                         SitConnection = false;
                         break;
 
@@ -121,13 +127,13 @@ namespace CsSQLite
                         {
                             Console.WriteLine("To Stop Press (/) or Press Enter");
 
-                            string item = (string)Input.Input("Enter Column name: ");
+                            string ColumnNameInput = (string)Input.Input("Enter Column name: ");
 
-                            if (string.IsNullOrWhiteSpace(item) || item == "/") break;
+                            if (string.IsNullOrWhiteSpace(ColumnNameInput) || ColumnNameInput == "/") break;
 
 
-                            string type = (string)Input.Input($"""
-                                    Enter {item} type 
+                            string ColumnTypeInput = (string)Input.Input($"""
+                                    Enter {ColumnNameInput} type 
                                     1 : INTEGER
                                     2 : TEXT
                                     3 : REAL
@@ -135,35 +141,25 @@ namespace CsSQLite
                                     5 : NUMERIC
                                     Enter your choice: 
                                     """);
-                            if (string.IsNullOrWhiteSpace(type) || type == "/") break;
+                            if (string.IsNullOrWhiteSpace(ColumnTypeInput) || ColumnTypeInput == "/") break;
 
-                            string columnType = (string)Input.Input($"""
-                                    Enter {item} type
+                            string columnDataTypeInput = (string)Input.Input($"""
+                                    Enter {ColumnNameInput} type
                                     1 : NOT NULL
                                     2 : PRIMARY KEY
                                     3 : PRIMARY KEY AUTOINCREMENT                    
                                     4 : UNIQUE
                                     Enter your choice: 
                                     """);
-                            if (string.IsNullOrWhiteSpace(columnType) || columnType == "/") break;
+                            if (string.IsNullOrWhiteSpace(columnDataTypeInput) || columnDataTypeInput == "/") break;
 
-                            ColumnName.Add(item);
-                            ColumnType.Add(type.ToUpper());
-
-                            List<string> columnTypePart = columnType.ToUpper().Split(' ').ToList();
-                            for (int i = 0; i < columnTypePart.Count; i++)
-                            {
-                                string TypeIndex = columnTypePart[i];
-                                if (TypeIndex.Contains("1")) columnTypePart[i] = "(NN)";
-                                if (TypeIndex.Contains("2")) columnTypePart[i] = "(P)";
-                                if (TypeIndex.Contains("3")) columnTypePart[i] = "(P,AI)";
-                                if (TypeIndex.Contains("4")) columnTypePart[i] = "(U)";
-                                ColumnDataType.Add(columnTypePart[i]);
-                            }
+                             
+                            ColumnType.Add(ColumnTypeInput);
+                            ColumnDataType.Add(columnDataTypeInput);
                         }
 
-                        Columns columns = new(ColumnName, ColumnType, ColumnDataType);
-                        file.CreateTable(Table, columns.DbColumns);
+                        ColumnsInfo NewColumns = new(ColumnName, ColumnType, ColumnDataType);
+                        file.CreateTable(Table, NewColumns);
                         break;
 
                     case "2":
@@ -309,7 +305,7 @@ namespace CsSQLite
                         2. Rename a table
                         3. Delete a table
                         4. Return back
-
+                        Enter your choice: 
                         """);
             Console.WriteLine($"input: {input}");
             
@@ -344,9 +340,7 @@ namespace CsSQLite
 
                         Enter your choice: 
                         """);
-            Console.WriteLine($"input: {input}");
-
-            
+            Console.WriteLine($"input: {input}");          
         }
     }
 }

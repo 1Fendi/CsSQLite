@@ -11,7 +11,9 @@ namespace CsSQLite
         {
             Console.Write(Message?.ToString() ?? "");
             string? userInput = Console.ReadLine();  
-            return userInput ?? Value ?? ""; 
+            return userInput ?? Value ?? "" ;
         }
+
+        
     }
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KHpMy+j+dZA=",
+  "dgSpecHash": "PFwpuHbYMNo=",
   "success": true,
-  "projectFilePath": "c:\\Users\\Yousef AL Mutawa\\Google Drive\\CsSQLite\\CsSQLite.csproj",
+  "projectFilePath": "c:\\Users\\Yousef AL Mutawa\\Google Drive\\My Projects\\CsSQLite\\CsSQLite.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Yousef AL Mutawa\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512",
     "C:\\Users\\Yousef AL Mutawa\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",

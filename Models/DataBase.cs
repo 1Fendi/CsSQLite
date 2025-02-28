@@ -43,45 +43,11 @@ namespace CsSQLite.Models
         //         Console.WriteLine($"ID: {student.Id}\t\tName: {student.Name}\t\tGrade: {student.Grade:0.00}");
         //     }
         // }
-		public void CreateTable(string TableName, Dictionary<string, string> TableColumns)
+		public void CreateTable(string TableName, ColumnsInfo TableColumns)
 		{
 			try
 			{
-	            List<string> ColumnFormats = new();
-				List<string> dataColumnName = TableColumns.Keys.AsList();
-				List<string> dataColumnType = TableColumns.Values.AsList();//[int (P),text...(P,AI)]
-				string ColumnString = string.Empty;
-
-				if (dataColumnType.Any(value => value.Contains("3")))
-				{
-					for(int item = 0; item < dataColumnType.Count; item++)
-					{
-						dataColumnType[item] = dataColumnType[item].Replace("2", "");
-					}
-				}
-
-				for (int item = 0; item < dataColumnName.Count; item++)
-				{
-	                List<string> dataColumnParts = dataColumnType[item].Split(' ').ToList<string>(); //["(NN)", "(P,AI)"]
-	               	// For type				
-					if (dataColumnParts.Contains("1")) ColumnString = " INTEGER";
-					if (dataColumnParts.Contains("2")) ColumnString = " TEXT";
-					if (dataColumnParts.Contains("3")) ColumnString = " REAL";
-					if (dataColumnParts.Contains("4")) ColumnString = " BLOB";
-					if (dataColumnParts.Contains("5")) ColumnString = " NUMERIC";
-					Console.WriteLine(ColumnString);
-					//For dataType
-	                if (dataColumnParts.Contains("1")) ColumnString += " NOT NULL";//"id integer not null"
-	                if (dataColumnParts.Contains("2")) ColumnString += " PRIMARY KEY";
-	                if (dataColumnParts.Contains("3")) ColumnString += " PRIMARY KEY AUTOINCREMENT";//id integer not null PRIMARY KEY AUTOINCREMENT
-	                if (dataColumnParts.Contains("4")) ColumnString += " UNIQUE";
-					Console.WriteLine(ColumnString);
-
-				    ColumnFormats.Add(ColumnString);
-					ColumnString = string.Empty;
-				}     
-				
-				string Code = $"CREATE TABLE IF NOT EXISTS \"{TableName}\" ({columnname}{string.Join(", ", ColumnFormats)});";
+				string Code = $"CREATE TABLE IF NOT EXISTS \"{TableName}\" ({string.Join(" ,", TableColumns.ColumnFormats)});";
 				Console.WriteLine($"tableC: {Code}");
 
 				dbConnection.Execute(Code);
